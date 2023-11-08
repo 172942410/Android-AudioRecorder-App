@@ -46,8 +46,7 @@ class AudioSaveHelper {
 
     try {
       os = new FileOutputStream(mFile);
-      writeWavHeader(os, Constants.RECORDER_CHANNELS, mRecordSampleRate,
-          Constants.RECORDER_AUDIO_ENCODING);
+      writeWavHeader(os, Constants.RECORDER_CHANNELS, mRecordSampleRate, Constants.RECORDER_AUDIO_ENCODING);
     } catch (IOException e) {
       // TODO: 4/9/17 handle this
       e.printStackTrace();
@@ -173,9 +172,10 @@ class AudioSaveHelper {
   }
 
   /**
-   * Updates the given wav file's header to include the final chunk sizes
    *
-   * @param wav The wav file to update
+   * 更新给定wav文件的头，以包括最终的块大小
+   *
+   * @param wav 要更新的wav文件
    * @throws IOException
    */
   private void updateWavHeader(File wav) throws IOException {

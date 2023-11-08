@@ -13,6 +13,8 @@ import io.reactivex.processors.BehaviorProcessor;
 import io.reactivex.processors.PublishProcessor;
 import io.reactivex.schedulers.Schedulers;
 import io.reactivex.subscribers.DisposableSubscriber;
+
+import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
@@ -25,6 +27,7 @@ public class AudioRecorder implements IAudioRecorder {
   private static final int RECORDER_STATE_STARTING = 1;
   private static final int RECORDER_STATE_STOPPING = 2;
   private static final int RECORDER_STATE_BUSY = 3;
+  private static final String TAG = "AudioRecorder";
 
   private volatile int recorderState;
 
@@ -104,6 +107,8 @@ public class AudioRecorder implements IAudioRecorder {
         if (!mIsPaused.get()) {
           int bytesRead = recorder.read(recordBuffer, 0, bufferSize);
           emitter.onNext(recordBuffer);
+          String buffer =  Arrays.toString(recordBuffer);
+          Log.d(TAG,"buffer:"+buffer);
           if (bytesRead == 0) {
             Log.e(AudioRecorder.class.getSimpleName(), "error: " + bytesRead);
             onRecordFailure();
