@@ -1,20 +1,22 @@
 package in.arjsna.audiorecorder.activities;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
+
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
 import in.arjsna.audiorecorder.R;
 import in.arjsna.audiorecorder.mvpbase.BaseActivity;
 import in.arjsna.audiorecorder.playlist.PlayListFragment;
 import javax.inject.Inject;
 
-public class PlayListActivity extends BaseActivity implements HasSupportFragmentInjector {
+public class PlayListActivity extends BaseActivity {
 
-  @Inject DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
+  @Inject
+  DispatchingAndroidInjector<Fragment> dispatchingAndroidInjector;
 
   @Override public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -36,7 +38,7 @@ public class PlayListActivity extends BaseActivity implements HasSupportFragment
     }
   }
 
-  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
-    return dispatchingAndroidInjector;
-  }
+//  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
+//    return dispatchingAndroidInjector;
+//  }
 }

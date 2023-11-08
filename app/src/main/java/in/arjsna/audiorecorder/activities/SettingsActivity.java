@@ -1,9 +1,11 @@
 package in.arjsna.audiorecorder.activities;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.Toolbar;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
+
 import in.arjsna.audiorecorder.R;
 import in.arjsna.audiorecorder.mvpbase.BaseActivity;
 import in.arjsna.audiorecorder.settings.SettingsFragment;

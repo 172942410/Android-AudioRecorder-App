@@ -3,14 +3,16 @@ package in.arjsna.audiorecorder.libs;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
-import android.support.v7.widget.SwitchCompat;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+import androidx.appcompat.widget.SwitchCompat;
+
 import com.orhanobut.hawk.Hawk;
 import in.arjsna.audiorecorder.R;
 import in.arjsna.audiorecorder.theme.ThemeHelper;
@@ -19,13 +21,15 @@ import in.arjsna.audiorecorder.theme.ThemedActivity;
 
 public class SettingWithSwitchView extends FrameLayout implements View.OnClickListener, Themed {
   private final String preferenceKey;
-  @StringRes private final int titleRes;
+  @StringRes
+  private final int titleRes;
   @StringRes private final int captionRes;
   private final boolean defaultValue;
   private TextView title;
   private TextView caption;
   private SwitchCompat toggle;
-  @Nullable private OnClickListener clickListener;
+  @Nullable
+  private OnClickListener clickListener;
 
   public SettingWithSwitchView(Context context) {
     this(context, null);

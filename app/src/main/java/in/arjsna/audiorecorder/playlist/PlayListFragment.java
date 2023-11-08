@@ -1,14 +1,12 @@
 package in.arjsna.audiorecorder.playlist;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.FileObserver;
 import android.os.Handler;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,17 +14,24 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
+import dagger.android.support.AndroidSupportInjection;
 import in.arjsna.audiorecorder.R;
 import in.arjsna.audiorecorder.db.RecordingItem;
-import in.arjsna.audiorecorder.mvpbase.BaseFragment;
 import in.arjsna.audiorecorder.recordingservice.Constants;
 import in.arjsna.audiorecorder.theme.ThemeHelper;
+import in.arjsna.audiorecorder.theme.ThemedFragment;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.inject.Inject;
 
-public class PlayListFragment extends BaseFragment implements PlayListMVPView {
+public class PlayListFragment extends ThemedFragment implements PlayListMVPView {
   private static final String LOG_TAG = "PlayListFragment";
 
   @Inject
@@ -41,6 +46,11 @@ public class PlayListFragment extends BaseFragment implements PlayListMVPView {
 
   public static PlayListFragment newInstance() {
     return new PlayListFragment();
+  }
+
+  @Override public void onAttach(Context context) {
+    super.onAttach(context);
+    AndroidSupportInjection.inject(this);
   }
 
   @Override

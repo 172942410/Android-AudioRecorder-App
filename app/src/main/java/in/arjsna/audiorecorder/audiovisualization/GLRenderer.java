@@ -2,7 +2,9 @@ package in.arjsna.audiorecorder.audiovisualization;
 
 import android.content.Context;
 import android.opengl.GLES20;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
+
 import java.util.Random;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;

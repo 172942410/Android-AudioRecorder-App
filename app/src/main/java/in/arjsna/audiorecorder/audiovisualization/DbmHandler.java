@@ -1,7 +1,8 @@
 package in.arjsna.audiorecorder.audiovisualization;
 
-import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+
 import in.arjsna.audiorecorder.recordingservice.AudioRecorder;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -109,7 +110,8 @@ public abstract class DbmHandler<TData> {
   /**
    * Called after {@link AudioVisualization#release()} ()} call.
    */
-  @CallSuper public void release() {
+  @CallSuper
+  public void release() {
     isVisualizationSetup = false;
     dBmArray = null;
     ampsArray = null;

@@ -3,19 +3,22 @@ package in.arjsna.audiorecorder.libs;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.os.Build;
-import android.support.annotation.Nullable;
-import android.support.annotation.StringRes;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
+
 import in.arjsna.audiorecorder.R;
 import in.arjsna.audiorecorder.theme.ThemeHelper;
 import in.arjsna.audiorecorder.theme.Themed;
 
 public class SettingBasic extends FrameLayout implements Themed {
-  @StringRes private final int titleRes;
+  @StringRes
+  private final int titleRes;
   @StringRes private final int captionRes;
   private TextView title;
   private TextView caption;

@@ -5,6 +5,8 @@
   <uses-permission android:name="android.permission.RECORD_AUDIO"/>
   <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
   <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
+  <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
+  <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/>
 
   <application
       android:allowBackup="false"
@@ -17,7 +19,8 @@
     <activity
         android:name="in.arjsna.audiorecorder.activities.MainActivity"
         android:screenOrientation="portrait"
-        android:launchMode="singleTop">
+        android:launchMode="singleTop"
+        android:exported="true">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
@@ -35,7 +38,7 @@
     </activity>
 
     <provider
-        android:name="android.support.v4.content.FileProvider"
+        android:name="androidx.core.content.FileProvider"
         android:authorities="in.arjsna.audiorecorder.fileprovider"
         android:exported="false"
         android:grantUriPermissions="true">
@@ -53,6 +56,16 @@
           android:name="android.support.PARENT_ACTIVITY"
           android:value="in.arjsna.audiorecorder.activities.MainActivity"/>
     </activity>
+    <provider
+        android:authorities="${applicationId}.fileProvider"
+        android:name="androidx.core.content.FileProvider"
+        android:grantUriPermissions="true"
+        >
+      <meta-data
+          android:name="android.support.FILE_PROVIDER_PATHS"
+          android:resource="@xml/filepaths" />
+    </provider>
+
   </application>
 
 </manifest>

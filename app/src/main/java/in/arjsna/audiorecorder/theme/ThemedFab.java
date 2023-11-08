@@ -2,8 +2,9 @@ package in.arjsna.audiorecorder.theme;
 
 import android.content.Context;
 import android.content.res.ColorStateList;
-import android.support.design.widget.FloatingActionButton;
 import android.util.AttributeSet;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ThemedFab extends FloatingActionButton implements Themed {
 

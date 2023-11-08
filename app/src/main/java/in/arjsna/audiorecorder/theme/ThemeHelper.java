@@ -1,5 +1,6 @@
 package in.arjsna.audiorecorder.theme;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.PorterDuff;
@@ -7,9 +8,6 @@ import android.graphics.PorterDuffColorFilter;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.support.annotation.ColorRes;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -18,6 +16,11 @@ import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.annotation.ColorRes;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
+
 import com.orhanobut.hawk.Hawk;
 import in.arjsna.audiorecorder.R;
 import java.lang.reflect.Field;
@@ -278,7 +281,7 @@ public class ThemeHelper {
 
   public static void setCursorColor(EditText editText, int color) {
     try {
-      Field fCursorDrawableRes =
+      @SuppressLint("SoonBlockedPrivateApi") Field fCursorDrawableRes =
           TextView.class.getDeclaredField("mCursorDrawableRes");
       fCursorDrawableRes.setAccessible(true);
       int mCursorDrawableRes = fCursorDrawableRes.getInt(editText);

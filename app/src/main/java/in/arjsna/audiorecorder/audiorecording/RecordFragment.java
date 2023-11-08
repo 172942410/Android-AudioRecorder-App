@@ -3,6 +3,7 @@ package in.arjsna.audiorecorder.audiorecording;
 import android.animation.FloatEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
+import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -11,31 +12,35 @@ import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.jakewharton.rxbinding2.view.RxView;
+
+import dagger.android.support.AndroidSupportInjection;
 import in.arjsna.audiorecorder.AppConstants;
 import in.arjsna.audiorecorder.R;
 import in.arjsna.audiorecorder.activities.PlayListActivity;
 import in.arjsna.audiorecorder.activities.SettingsActivity;
 import in.arjsna.audiorecorder.audiovisualization.GLAudioVisualizationView;
 import in.arjsna.audiorecorder.di.qualifiers.ActivityContext;
-import in.arjsna.audiorecorder.mvpbase.BaseFragment;
 import in.arjsna.audiorecorder.recordingservice.AudioRecordService;
 import in.arjsna.audiorecorder.recordingservice.AudioRecorder;
 import in.arjsna.audiorecorder.theme.ThemeHelper;
+import in.arjsna.audiorecorder.theme.ThemedFragment;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
 import javax.inject.Inject;
 
-public class RecordFragment extends BaseFragment implements AudioRecordMVPView {
+public class RecordFragment extends ThemedFragment implements AudioRecordMVPView {
   private static final String LOG_TAG = RecordFragment.class.getSimpleName();
   private FloatingActionButton mRecordButton = null;
   private FloatingActionButton mPauseButton = null;
@@ -57,6 +62,11 @@ public class RecordFragment extends BaseFragment implements AudioRecordMVPView {
 
   public static RecordFragment newInstance() {
     return new RecordFragment();
+  }
+
+  @Override public void onAttach(Context context) {
+    super.onAttach(context);
+    AndroidSupportInjection.inject(this);
   }
 
   @Override public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -83,6 +93,7 @@ public class RecordFragment extends BaseFragment implements AudioRecordMVPView {
         .subscribe(o -> audioRecordPresenter.onTogglePauseStatus());
   }
 
+  @SuppressLint("RestrictedApi")
   private void initViews(View recordView) {
     chronometer = recordView.findViewById(R.id.chronometer);
 
@@ -164,10 +175,12 @@ public class RecordFragment extends BaseFragment implements AudioRecordMVPView {
     audioVisualization.linkTo(mAudioRecordService.getHandler());
   }
 
+  @SuppressLint("RestrictedApi")
   @Override public void setPauseButtonVisible() {
     mPauseButton.setVisibility(View.VISIBLE);
   }
 
+  @SuppressLint("RestrictedApi")
   @Override public void setPauseButtonInVisible() {
     mPauseButton.setVisibility(View.GONE);
   }

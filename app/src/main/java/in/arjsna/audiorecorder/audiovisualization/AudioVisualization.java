@@ -1,6 +1,7 @@
 package in.arjsna.audiorecorder.audiovisualization;
 
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 /**
  * Audio visualization view interface

@@ -60,6 +60,10 @@ class AudioSaveHelper {
     } catch (IOException e) {
       e.printStackTrace();
     }
+//    catch (NullPointerException e){
+//      e.printStackTrace();
+//      Log.e("AudioSaveHelper","onDataReady 空指针了："+data.length);
+//    }
   }
 
   public void onRecordingStopped(AudioRecorder.RecordTime currentRecordTime) {

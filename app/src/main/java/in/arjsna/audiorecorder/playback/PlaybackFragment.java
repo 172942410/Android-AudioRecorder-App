@@ -9,14 +9,16 @@ import android.media.MediaPlayer;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.NonNull;
-import android.support.v7.widget.AppCompatSeekBar;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatSeekBar;
+
 import in.arjsna.audiorecorder.R;
 import in.arjsna.audiorecorder.db.RecordingItem;
 import in.arjsna.audiorecorder.theme.ThemeHelper;
@@ -66,7 +68,8 @@ public class PlaybackFragment extends ThemedDialogFragment {
     seconds = TimeUnit.MILLISECONDS.toSeconds(itemDuration) - TimeUnit.MINUTES.toSeconds(minutes);
   }
 
-  @NonNull @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
+  @NonNull
+  @Override public Dialog onCreateDialog(Bundle savedInstanceState) {
 
     Dialog dialog = super.onCreateDialog(savedInstanceState);
 

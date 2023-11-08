@@ -1,12 +1,17 @@
 package in.arjsna.audiorecorder.theme;
 
-import android.support.annotation.StringRes;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.annotation.StringRes;
+import androidx.appcompat.app.AlertDialog;
+
+import com.onegravity.colorpicker.ColorWheelView;
+
+//import codes.side.andcolorpicker.rgb.RGBColorPickerSeekBar;
 import in.arjsna.audiorecorder.R;
-import uz.shift.colorpicker.LineColorPicker;
+//import uz.shift.colorpicker.LineColorPicker;
 
 public class ColorsSetting extends ThemedSetting {
 
@@ -32,9 +37,9 @@ public class ColorsSetting extends ThemedSetting {
 
     View dialogLayout =
         LayoutInflater.from(getActivity()).inflate(R.layout.dialog_color_picker, null);
-    final LineColorPicker colorPicker =
+    final ColorWheelView colorPicker =
         dialogLayout.findViewById(R.id.color_picker_primary);
-    final LineColorPicker colorPicker2 =
+    final ColorWheelView colorPicker2 =
         dialogLayout.findViewById(R.id.color_picker_primary_2);
     final TextView dialogTitle = dialogLayout.findViewById(R.id.dialog_title);
     dialogTitle.setText(title);
@@ -42,15 +47,15 @@ public class ColorsSetting extends ThemedSetting {
     colorPicker.setSelected(true);
     colorPicker.setOnColorChangedListener(c -> {
       dialogTitle.setBackgroundColor(c);
-      colorPicker2.setColors(ColorPalette.getColors(getActivity(), colorPicker.getColor()));
-      colorPicker2.setSelectedColor(colorPicker.getColor());
-      dialogTitle.setBackgroundColor(colorPicker2.getColors()[0]);
-      chooser.onColorChanged(colorPicker2.getColors()[0]);
+//      colorPicker2.setColors(ColorPalette.getColors(getActivity(), colorPicker.getColor()));
+//      colorPicker2.setSelectedColor(colorPicker.getColor());
+//      dialogTitle.setBackgroundColor(colorPicker2.getColors()[0]);
+//      chooser.onColorChanged(colorPicker2.getColors()[0]);
     });
 
     int[] baseColors = ColorPalette.getBaseColors(getActivity());
-    colorPicker.setColors(baseColors);
-    colorPicker.setSelectedColor(defaultColor);
+//    colorPicker.setColors(baseColors);
+//    colorPicker.setSelectedColor(defaultColor);
 
     dialogBuilder.setView(dialogLayout);
 
@@ -68,7 +73,7 @@ public class ColorsSetting extends ThemedSetting {
           alertDialog.setOnDismissListener(null);
           SelectedColor selectedColor = new SelectedColor();
           selectedColor.colorPrimary = colorPicker.getColor();
-          selectedColor.shades = colorPicker2.getColors();
+//          selectedColor.shades = colorPicker2.getColors();
           chooser.onColorSelected(selectedColor);
         });
 

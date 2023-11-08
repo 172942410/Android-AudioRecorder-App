@@ -3,10 +3,6 @@ package in.arjsna.audiorecorder.theme;
 import android.annotation.TargetApi;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.CallSuper;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SwitchCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -14,10 +10,17 @@ import android.widget.RadioButton;
 import android.widget.ScrollView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.annotation.CallSuper;
+import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
+
 import com.orhanobut.hawk.Hawk;
+
+import dagger.android.support.DaggerAppCompatActivity;
 import in.arjsna.audiorecorder.R;
 
-public abstract class ThemedActivity extends AppCompatActivity implements UiElementInizializer {
+public abstract class ThemedActivity extends DaggerAppCompatActivity implements UiElementInizializer {
 
   private ThemeHelper themeHelper;
 

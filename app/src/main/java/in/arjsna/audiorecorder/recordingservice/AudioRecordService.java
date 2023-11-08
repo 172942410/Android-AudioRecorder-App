@@ -1,15 +1,21 @@
 package in.arjsna.audiorecorder.recordingservice;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
+
+import androidx.annotation.RequiresApi;
+import androidx.core.app.NotificationCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
+
 import com.orhanobut.hawk.Hawk;
 import dagger.android.AndroidInjection;
 import in.arjsna.audiorecorder.AppConstants;
@@ -110,10 +116,34 @@ public class AudioRecordService extends Service {
     mNotificationManager.notify(NOTIFY_ID, createNotification(recordTime));
   }
 
+  /**
+   * 创建通知通道
+   * @param channelId
+   * @param channelName
+   * @return
+   */
+  @RequiresApi(Build.VERSION_CODES.O)
+  private String createNotificationChannel(String channelId, String channelName){
+    NotificationChannel chan = new NotificationChannel(channelId,
+            channelName, NotificationManager.IMPORTANCE_NONE);
+    chan.setLightColor(Color.BLUE);
+    chan.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+    NotificationManager service = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    service.createNotificationChannel(chan);
+    return channelId;
+  }
+
   private Notification createNotification(AudioRecorder.RecordTime recordTime) {
+    String channelId = null;
+    // 8.0 以上需要特殊处理
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      channelId = createNotificationChannel("perry.li", "ForegroundService");
+    } else {
+      channelId = "";
+    }
     lastUpdated = recordTime;
     NotificationCompat.Builder mBuilder =
-        new NotificationCompat.Builder(getApplicationContext()).setSmallIcon(
+        new NotificationCompat.Builder(getApplicationContext(),channelId).setSmallIcon(
             R.drawable.ic_media_record)
             .setContentTitle(getString(R.string.notification_recording))
             .setContentText(
@@ -132,7 +162,7 @@ public class AudioRecordService extends Service {
           getActionIntent(AppConstants.ACTION_PAUSE));
     }
     mBuilder.setContentIntent(PendingIntent.getActivities(getApplicationContext(), 0,
-        new Intent[] {new Intent(getApplicationContext(), MainActivity.class)}, 0));
+        new Intent[] {new Intent(getApplicationContext(), MainActivity.class)}, PendingIntent.FLAG_IMMUTABLE));
 
     return mBuilder.build();
   }
@@ -159,7 +189,7 @@ public class AudioRecordService extends Service {
   private PendingIntent getActionIntent(String action) {
     Intent pauseIntent = new Intent(this, AudioRecordService.class);
     pauseIntent.setAction(action);
-    return PendingIntent.getService(this, 100, pauseIntent, 0);
+    return PendingIntent.getService(this, 100, pauseIntent, PendingIntent.FLAG_IMMUTABLE);
   }
 
   @Override public boolean onUnbind(Intent intent) {

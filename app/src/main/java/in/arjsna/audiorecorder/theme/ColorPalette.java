@@ -2,8 +2,10 @@ package in.arjsna.audiorecorder.theme;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.ColorUtils;
+
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.ColorUtils;
+
 import in.arjsna.audiorecorder.R;
 
 public class ColorPalette {

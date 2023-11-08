@@ -5,17 +5,19 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+import android.os.Environment;
+import android.provider.Settings;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.squareup.haha.perflib.Main;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.Fragment;
+
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.support.HasSupportFragmentInjector;
 import in.arjsna.audiorecorder.R;
 import in.arjsna.audiorecorder.audiorecording.RecordFragment;
 import in.arjsna.audiorecorder.mvpbase.BaseActivity;
@@ -24,7 +26,7 @@ import javax.inject.Inject;
 import pub.devrel.easypermissions.EasyPermissions;
 
 public class MainActivity extends BaseActivity
-    implements HasSupportFragmentInjector, EasyPermissions.PermissionCallbacks {
+    implements EasyPermissions.PermissionCallbacks {
 
   private static final String LOG_TAG = MainActivity.class.getSimpleName();
   private static final int PERMISSION_REQ = 222;
@@ -57,20 +59,68 @@ public class MainActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
   }
+  //添加以下
+  public boolean gtSdk30() { //获取当前系统版本是否安卓11以上
+    return Build.VERSION.SDK_INT >= Build.VERSION_CODES.R;
+  }
+//R = 安卓11，O = 8, M = 6
+
+  private void isManager() {
+    if (gtSdk30()) {//判断当前手机系统版本
+      if (Environment.isExternalStorageManager()) {
+//        init();
+      }
+      else {
+        getManager();
+      }
+    } else {
+//      init();
+    }
+  }
+
+  private void getManager() {
+    AlertDialog alertDialog;//生成一个对话框 可跳转设置里手动开启权限
+    AlertDialog.Builder builder = new AlertDialog.Builder(this);//嫌麻烦，样式可设为null
+    builder.setPositiveButton("确认", null);
+    builder.setTitle("权限弹框");
+    builder.setMessage("权限获取");
+    builder.setCancelable(false);
+    alertDialog = builder.create();
+    alertDialog.show();
+    alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener(v -> {
+      alertDialog.dismiss();//去获取文件管理
+      Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+      intent.setData(Uri.parse("package:" + getPackageName()));
+      startActivityForResult(intent, 0x99);
+    });
+  }
 
   @TargetApi(23)
   private void getPermissions() {
-    String[] permissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE,
-        Manifest.permission.RECORD_AUDIO};
-    if (!EasyPermissions.hasPermissions(MainActivity.this, permissions)) {
-      EasyPermissions.requestPermissions(this, getString(R.string.permissions_required),
-          PERMISSION_REQ, permissions);
+    String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE};
+    if (EasyPermissions.hasPermissions(this, perms)) {
+      // 已经拥有相关权限
+      isManager();//修改这里！！！ 如果是安卓11以上 获取文件管理者
+    } else {
+      // 没有获取相关权限 去申请权限
+      String[] permissions = new String[]{
+              Manifest.permission.WRITE_EXTERNAL_STORAGE,
+              Manifest.permission.RECORD_AUDIO,
+              Manifest.permission.MANAGE_EXTERNAL_STORAGE,
+              Manifest.permission.ACCESS_FINE_LOCATION,
+              Manifest.permission.ACCESS_COARSE_LOCATION,
+      };
+      if (!EasyPermissions.hasPermissions(MainActivity.this, permissions)) {
+        EasyPermissions.requestPermissions(this, getString(R.string.permissions_required),
+                PERMISSION_REQ, permissions);
+      }
     }
   }
 
   @TargetApi(23)
   @Override public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
       @NonNull int[] grantResults) {
+    super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
   }
 
@@ -100,9 +150,9 @@ public class MainActivity extends BaseActivity
     getPermissions();
   }
 
-  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
-    return dispatchingAndroidInjector;
-  }
+//  @Override public AndroidInjector<Fragment> supportFragmentInjector() {
+//    return dispatchingAndroidInjector;
+//  }
 
   @Override public void onPermissionsGranted(int requestCode, List<String> perms) {
     //NO-OP

@@ -4,10 +4,12 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
+
 import com.orhanobut.hawk.Hawk;
 import in.arjsna.audiorecorder.R;
 import in.arjsna.audiorecorder.libs.SettingBasic;
@@ -23,7 +25,8 @@ public class SettingsFragment extends ThemedFragment {
   private ThemedActivity parent;
   private SettingBasic rateApp;
 
-  @Nullable @Override
+  @Nullable
+  @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     rootView = inflater.inflate(R.layout.fragment_settings, container, false);
